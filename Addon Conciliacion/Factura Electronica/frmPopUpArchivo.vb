@@ -27,7 +27,7 @@ Public Class frmPopUpArchivo
             Connected = -1
 
             oCompany = New SAPbobsCOM.Company
-            oCompany.Server = Lista(0)
+            oCompany.Server = Lista(0) + ":30015"
             Select Case Lista(4).ToString
                 Case "0"
                     oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_MSSQL2005
@@ -107,9 +107,9 @@ Public Class frmPopUpArchivo
                     Dim oRecordSet As SAPbobsCOM.Recordset
                     oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
                     If txtBuscar.Text <> "" Then
-                        oRecordSet.DoQuery("exec BUSCAR_EXCEL_CARGA '1','" & llave & "'")
+                        oRecordSet.DoQuery("CALL BUSCAR_EXCEL_CARGA( '1','" & llave & "')")
                     Else
-                        oRecordSet.DoQuery("exec BUSCAR_EXCEL_CARGA '*','" & "" & "'")
+                        oRecordSet.DoQuery("CALL BUSCAR_EXCEL_CARGA( '*','" & "" & "')")
                     End If
 
                     Dim table1 As New DataTable
@@ -147,4 +147,5 @@ Public Class frmPopUpArchivo
         carga.fecha = dvgArchivo.Rows(e.RowIndex).Cells(3).Value.ToString()
         Me.Close()
     End Sub
+
 End Class

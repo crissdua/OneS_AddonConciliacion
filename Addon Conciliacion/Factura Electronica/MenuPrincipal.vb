@@ -204,9 +204,9 @@ Public Class MenuPrincipal
             Connected = -1
 
             oCompany = New SAPbobsCOM.Company
-            oCompany.Server = Lista(0)
+            oCompany.Server = Lista(0) + ":30015"
 
-            Select Lista(4).ToString
+            Select Case Lista(4).ToString
                 Case "0"
                     oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_MSSQL2005
                 Case "1"
@@ -258,12 +258,12 @@ Public Class MenuPrincipal
 
 
             Dim frm2 As frmBaseDatos = CType(Me.ActiveMdiChild, frmBaseDatos)
-            If frm2.txtCompañia.Text = "" Or frm2.txtSapUser.Text.Equals("") Or frm2.txtContraseñaSap.Text.Equals("") Or frm2.txtuserDB.Text.Equals("") Or frm2.txtPasswordDB.Text.Equals("") Or frm2.txtServer.Text.Equals("") And frm2.cboTipoSQl.SelectedIndex = -1 Then
+            If frm2.txtSapUser.Text.Equals("") Or frm2.txtContraseñaSap.Text.Equals("") Or frm2.txtuserDB.Text.Equals("") Or frm2.txtPasswordDB.Text.Equals("") Or frm2.txtServer.Text.Equals("") And frm2.cboTipoSQl.SelectedIndex = -1 Then
                 MessageBox.Show("Debe de Llenar todos los campos")
                 Return
             End If
             Lista.Add(frm2.txtServer.Text)
-            Lista.Add(frm2.txtCompañia .Text)
+            Lista.Add(frm2.cboCompany.SelectedItem.ToString)
             Lista.Add(frm2.txtSapUser.Text)
             Lista.Add(frm2.txtContraseñaSap.Text)
             Lista.Add(frm2.cboTipoSQl.SelectedIndex.ToString)
@@ -331,7 +331,7 @@ Public Class MenuPrincipal
                         If MakeConnectionSAP(Lista) Then
                             Dim oRecordSet As SAPbobsCOM.Recordset
                             oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                            Dim sql = "exec INSERTAR_EXCEL_CARGA '" & frm2.txtRuta.Text & "','" & frm2.cboPlantilla.SelectedItem.ToString & "','" & frm2.txtDescripcion.Text & "'"
+                            Dim sql = "CALL INSERTAR_EXCEL_CARGA( '" & frm2.txtRuta.Text & "','" & frm2.cboPlantilla.SelectedItem.ToString & "','" & frm2.txtDescripcion.Text & "')"
                             oRecordSet.DoQuery(sql)
                             oCompany.Disconnect()
                             System.Runtime.InteropServices.Marshal.ReleaseComObject(oCompany)
@@ -527,11 +527,23 @@ Public Class MenuPrincipal
                         If conteo = frm.dvgPlantilla.Rows.Count Then
                             Dim oRecordSet As SAPbobsCOM.Recordset
                             oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                            oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
+                            oRecordSet.DoQuery("CALL EDITA_EXCEL( '" & frm.txtArchivo.Text & "','" & frm.txtplantilla.Text & "')")
+                            'oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
                             formularioConciliacion = Nothing
                             btnConsolidar_ItemClick(Nothing, Nothing)
                             oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit)
                             MessageBox.Show("Proceso Finalizado Exitosamente!")
+
+
+                            Dim oUserTable As SAPbobsCOM.UserTable
+                            oUserTable = oCompany.UserTables.Item("@CARGA_EXCEL")
+                            oUserTable.U_Status = "N"
+                            oUserTable.Name = "1"
+                            oUserTable.UserFields.Fields.Item("U_status").Value = "N"
+
+                            oUserTable.Add()
+
+
                         Else
                             formularioConciliacion = Nothing
                             btnConsolidar_ItemClick(Nothing, Nothing)
@@ -617,7 +629,8 @@ Public Class MenuPrincipal
 
                                 Dim oRecordSet As SAPbobsCOM.Recordset
                                 oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                                oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
+                                oRecordSet.DoQuery("CALL EDITA_EXCEL( '" & frm.txtArchivo.Text & "','" & frm.txtplantilla.Text & "')")
+                                'oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
                                 formularioConciliacion = Nothing
                                 btnConsolidar_ItemClick(Nothing, Nothing)
                                 oCompany.EndTransaction(SAPbobsCOM.BoWfTransOpt.wf_Commit)
@@ -691,7 +704,8 @@ Public Class MenuPrincipal
                                 MessageBox.Show("Proceso Finalizado Exitosamente!")
                                 Dim oRecordSet As SAPbobsCOM.Recordset
                                 oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                                oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
+                                oRecordSet.DoQuery("CALL EDITA_EXCEL( '" & frm.txtArchivo.Text & "','" & frm.txtplantilla.Text & "')")
+                                'oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
                                 formularioConciliacion = Nothing
                                 btnConsolidar_ItemClick(Nothing, Nothing)
                             Catch ex As Exception
@@ -763,7 +777,8 @@ Public Class MenuPrincipal
                         MessageBox.Show("Proceso Finalizado Exitosamente!")
                         Dim oRecordSet As SAPbobsCOM.Recordset
                         oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
-                        oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
+                        oRecordSet.DoQuery("CALL EDITA_EXCEL( '" & frm.txtArchivo.Text & "','" & frm.txtplantilla.Text & "')")
+                        'oRecordSet.DoQuery("update [@CARGA_EXCEL] set U_status='N'  where U_descripcion = '" & frm.txtArchivo.Text & "' and U_tipo_plantilla = '" & frm.txtplantilla.Text & "'")
                         formularioConciliacion = Nothing
                         btnConsolidar_ItemClick(Nothing, Nothing)
                     Else
@@ -779,4 +794,14 @@ Public Class MenuPrincipal
         End Try
     End Sub
 
+    Private Sub Button1_Click(sender As Object, e As EventArgs)
+    End Sub
+
+    Private Sub BarButtonItem2_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItem2.ItemClick
+
+    End Sub
+
+    Private Sub BarButtonItem3_ItemClick(sender As Object, e As DevExpress.XtraBars.ItemClickEventArgs) Handles BarButtonItem3.ItemClick
+
+    End Sub
 End Class

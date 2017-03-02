@@ -33,11 +33,11 @@ Partial Class frmBaseDatos
         Me.txtContraseñaSap = New DevExpress.XtraEditors.TextEdit()
         Me.Label3 = New System.Windows.Forms.Label()
         Me.PanelControl1 = New DevExpress.XtraEditors.PanelControl()
-        Me.cboCompany = New System.Windows.Forms.ComboBox()
         Me.Label5 = New System.Windows.Forms.Label()
         Me.Label4 = New System.Windows.Forms.Label()
         Me.cboTipoSQl = New System.Windows.Forms.ComboBox()
         Me.txtServer = New DevExpress.XtraEditors.TextEdit()
+        Me.cboCompany = New System.Windows.Forms.ComboBox()
         Me.LabelControl1 = New DevExpress.XtraEditors.LabelControl()
         Me.LabelControl2 = New DevExpress.XtraEditors.LabelControl()
         Me.PanelControl2 = New DevExpress.XtraEditors.PanelControl()
@@ -90,10 +90,11 @@ Partial Class frmBaseDatos
         '
         'txtCompañia
         '
-        Me.txtCompañia.Location = New System.Drawing.Point(72, 31)
+        Me.txtCompañia.Location = New System.Drawing.Point(261, 80)
         Me.txtCompañia.Name = "txtCompañia"
         Me.txtCompañia.Size = New System.Drawing.Size(100, 20)
         Me.txtCompañia.TabIndex = 2
+        Me.txtCompañia.Visible = False
         '
         'Label1
         '
@@ -139,12 +140,12 @@ Partial Class frmBaseDatos
         '
         'PanelControl1
         '
+        Me.PanelControl1.Controls.Add(Me.cboCompany)
         Me.PanelControl1.Controls.Add(Me.Label5)
         Me.PanelControl1.Controls.Add(Me.Label4)
         Me.PanelControl1.Controls.Add(Me.cboTipoSQl)
         Me.PanelControl1.Controls.Add(Me.txtServer)
         Me.PanelControl1.Controls.Add(Me.Label1)
-        Me.PanelControl1.Controls.Add(Me.txtCompañia)
         Me.PanelControl1.Controls.Add(Me.txtContraseñaSap)
         Me.PanelControl1.Controls.Add(Me.Label3)
         Me.PanelControl1.Controls.Add(Me.Label2)
@@ -153,15 +154,6 @@ Partial Class frmBaseDatos
         Me.PanelControl1.Name = "PanelControl1"
         Me.PanelControl1.Size = New System.Drawing.Size(200, 136)
         Me.PanelControl1.TabIndex = 11
-        '
-        'cboCompany
-        '
-        Me.cboCompany.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cboCompany.FormattingEnabled = True
-        Me.cboCompany.Location = New System.Drawing.Point(221, 62)
-        Me.cboCompany.Name = "cboCompany"
-        Me.cboCompany.Size = New System.Drawing.Size(100, 21)
-        Me.cboCompany.TabIndex = 15
         '
         'Label5
         '
@@ -197,6 +189,15 @@ Partial Class frmBaseDatos
         Me.txtServer.Name = "txtServer"
         Me.txtServer.Size = New System.Drawing.Size(100, 20)
         Me.txtServer.TabIndex = 1
+        '
+        'cboCompany
+        '
+        Me.cboCompany.Enabled = False
+        Me.cboCompany.FormattingEnabled = True
+        Me.cboCompany.Location = New System.Drawing.Point(72, 30)
+        Me.cboCompany.Name = "cboCompany"
+        Me.cboCompany.Size = New System.Drawing.Size(100, 21)
+        Me.cboCompany.TabIndex = 15
         '
         'LabelControl1
         '
@@ -258,11 +259,11 @@ Partial Class frmBaseDatos
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(890, 318)
-        Me.Controls.Add(Me.cboCompany)
         Me.Controls.Add(Me.PanelControl2)
         Me.Controls.Add(Me.LabelControl2)
         Me.Controls.Add(Me.LabelControl1)
         Me.Controls.Add(Me.PanelControl1)
+        Me.Controls.Add(Me.txtCompañia)
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmBaseDatos"

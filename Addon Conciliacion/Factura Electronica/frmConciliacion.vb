@@ -126,4 +126,8 @@ Public Class frmConciliacion
         TextBox1.Text = jj.formCode
         txtidCuenta.Text = jj.IdCuenta
     End Sub
+
+    Private Sub frmConciliacion_Load(sender As Object, e As EventArgs) Handles MyBase.Load
+
+    End Sub
 End Class

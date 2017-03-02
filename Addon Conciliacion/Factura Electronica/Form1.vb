@@ -1,9 +1,10 @@
 ﻿Imports System.Xml
 
 Public Class frmBaseDatos
-
+    Public cbo As String
     Private Sub frmBaseDatos_Load(sender As Object, e As EventArgs) Handles MyBase.Load
         Try
+
             Dim Doc As New XmlDocument, ListaNodos As XmlNodeList, Nodo As XmlNode
             Dim Lista As ArrayList = New ArrayList()
             Dim encrip As New EncryptComp.Library.Encrypt
@@ -19,8 +20,8 @@ Public Class frmBaseDatos
                 Lista.Add(Nodo.ChildNodes.Item(0).InnerText)
             Next
             txtServer.Text = Lista(0)
-            txtCompañia.Text = Lista(1)
-            'cboCompany.SelectedIndex = 0
+            'cboCompany.Text = Lista(1)
+            'cboCompany.SelectedText = Lista(1)
             txtSapUser.Text = Lista(2)
             txtContraseñaSap.Text = Lista(3)
             cboTipoSQl.SelectedIndex = Lista(4)
@@ -41,19 +42,10 @@ Public Class frmBaseDatos
             Dim oCompany As SAPbobsCOM.Company
             oCompany = New SAPbobsCOM.Company
             Dim recordSet As SAPbobsCOM.Recordset
-            oCompany.Server = "192.168.1.51:30015"
-            oCompany.Password = "12345"
-            oCompany.UserName = "manager"
-            oCompany.CompanyDB = "SBODEMOGT"
-            oCompany.DbPassword = "Hana2OL7"
-            oCompany.DbUserName = "USERSAP"
+            oCompany.Server = txtDBServer.Text + ":30015"
+            oCompany.DbPassword = txtPasswordDB.Text
+            oCompany.DbUserName = txtuserDB.Text
             oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_HANADB
-
-
-            'oCompany.Server = txtDBServer.Text
-            'oCompany.DbPassword = txtPasswordDB.Text
-            'oCompany.DbUserName = txtuserDB.Text
-            'oCompany.DbServerType = SAPbobsCOM.BoDataServerTypes.dst_HANADB
             recordSet = oCompany.GetCompanyList
             If recordSet.RecordCount > 0 Then
                 While recordSet.EoF = False
@@ -61,11 +53,16 @@ Public Class frmBaseDatos
                     recordSet.MoveNext()
                 End While
             End If
+            cboCompany.Enabled = True
             MessageBox.Show("Compañias Cargadas Exitosamente!")
         Catch ex As Exception
             MessageBox.Show(ex.Message)
         End Try
 
+
+    End Sub
+
+    Private Sub cboTipoSQl_SelectedIndexChanged(sender As Object, e As EventArgs) Handles cboTipoSQl.SelectedIndexChanged
 
     End Sub
 End Class

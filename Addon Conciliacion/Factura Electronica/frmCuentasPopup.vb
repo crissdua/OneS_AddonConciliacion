@@ -28,7 +28,7 @@ Public Class frmCuentasPopup
             Connected = -1
 
             oCompany = New SAPbobsCOM.Company
-            oCompany.Server = Lista(0)
+            oCompany.Server = Lista(0) + ":30015"
 
             Select Case Lista(4).ToString
                 Case "0"
@@ -46,12 +46,11 @@ Public Class frmCuentasPopup
             oCompany.CompanyDB = Lista(1) '"FYA"
             oCompany.UserName = Lista(2) '"manager"
             oCompany.Password = Lista(3) ' "alegria"
-
             Connected = oCompany.Connect()
 
             If Connected <> 0 Then
                 ' oCompany.GetLastError(ErrorCode, ErrorMessage)
-                ' MsgBox(ErrorCode & " " & ErrorMessage)
+                'MsgBox(ErrorCode & " " & ErrorMessage)
                 Connected = False
                 MsgBox(oCompany.GetLastErrorDescription)
                 'conectado = False
@@ -100,9 +99,9 @@ Public Class frmCuentasPopup
                     Dim oRecordSet As SAPbobsCOM.Recordset
                     oRecordSet = oCompany.GetBusinessObject(SAPbobsCOM.BoObjectTypes.BoRecordset)
                     If txtCuenta.Text <> "" Then
-                        oRecordSet.DoQuery("exec BUSCAR_CUENTAS '1','" & llave & "'")
+                        oRecordSet.DoQuery("CALL BUSCAR_CUENTAS( '1','" & llave & "')")
                     Else
-                        oRecordSet.DoQuery("exec BUSCAR_CUENTAS '*','" & "" & "'")
+                        oRecordSet.DoQuery("CALL BUSCAR_CUENTAS( '*','" & "" & "')")
                     End If
 
                     Dim table1 As New DataTable
@@ -146,4 +145,5 @@ Public Class frmCuentasPopup
         formCode = dvgArchivo.Rows(e.RowIndex).Cells(2).Value.ToString()
         Me.Close()
     End Sub
+
 End Class
