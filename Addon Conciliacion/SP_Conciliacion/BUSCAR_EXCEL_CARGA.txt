@@ -1,0 +1,14 @@
+CREATE PROCEDURE BUSCAR_EXCEL_CARGA 
+(
+IN TIPO_BUSQUEDA VARCHAR(3), 
+IN BUSQUEDA VARCHAR(60)
+)
+AS
+BEGIN
+
+ IF (:TIPO_BUSQUEDA = '*') THEN
+	select * from  "@CARGA_EXCEL" where "U_status" = 'A'; 
+ ELSE
+  	select * from  "@CARGA_EXCEL" WHERE "U_descripcion" LIKE '%'||:BUSQUEDA||'%' and  "U_status" = 'A';
+END IF;
+END;

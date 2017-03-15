@@ -1,0 +1,19 @@
+CREATE PROCEDURE BUSCAR_CUENTAS 
+(
+IN TIPO_BUSQUEDA VARCHAR(3),
+IN BUSQUEDA VARCHAR(60)
+)
+AS
+BEGIN
+IF (:TIPO_BUSQUEDA = '*') THEN
+  SELECT A."AcctCode",A."AcctName", 
+  IFNULL(A."Segment_0",'') AS "CODIGO" 
+  FROM OACT A 
+  INNER JOIN DSC1 B ON A."AcctCode" = B."GLAccount" ;
+ELSE
+SELECT A."AcctCode",A."AcctName", IFNULL(A."Segment_0",'') AS "CODIGO"
+ FROM OACT  A 
+ INNER JOIN DSC1 B ON A."AcctCode" = B."GLAccount" 
+ WHERE A."Segment_0" LIKE '%'||:BUSQUEDA||'%';
+END IF;
+END;

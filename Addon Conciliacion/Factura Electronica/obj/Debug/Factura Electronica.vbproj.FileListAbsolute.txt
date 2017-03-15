@@ -175,3 +175,9 @@ C:\Users\criss\Desktop\Addon Conciliacion\Factura Electronica\obj\Debug\Concilia
 C:\Users\criss\Desktop\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.exe
 C:\Users\criss\Desktop\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.xml
 C:\Users\criss\Desktop\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.pdb
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\bin\Debug\Conciliacion.exe.config
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\obj\Debug\Interop.SAPbobsCOM.dll
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\obj\Debug\Factura Electronica.vbproj.ResolveComReference.cache
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.exe
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.xml
+C:\Users\criss\Documents\GitHub\OneS_AddonConciliacion\Addon Conciliacion\Factura Electronica\obj\Debug\Conciliacion.pdb

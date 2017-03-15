@@ -1,0 +1,13 @@
+CREATE PROCEDURE EDITA_EXCEL 
+(
+IN DESCRIPCION VARCHAR(3),
+IN TIPO_PLANTILLA VARCHAR(60)
+)
+AS
+BEGIN
+
+update 
+"@CARGA_EXCEL" set "U_status"='N'  
+where "U_descripcion" = :DESCRIPCION and "U_tipo_plantilla" = :TIPO_PLANTILLA;
+
+END;
